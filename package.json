@@ -1,0 +1,26 @@
+{
+  "name": "jsonapi-flux-util",
+  "version": "0.0.1",
+  "description": "JSON API flux utility",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --check-leaks --reporter spec --bail"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jthoms1/jsonapi-flux-util.git"
+  },
+  "author": "Josh Thomas (http://github.com/jthoms1)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jthoms1/jsonapi-flux-util/issues"
+  },
+  "homepage": "https://github.com/jthoms1/jsonapi-flux-util",
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "sinon": "^1.12.2"
+  },
+  "dependencies": {
+    "superagent": "^0.21.0"
+  }
+}
