@@ -23,7 +23,7 @@ function _getResourceUrl(resourceName, id=null) {
 }
 
 module.exports = {
-  get (resourceName, options={}) {
+  get: function(resourceName, options={}) {
     let resourceUrl = _getResourceUrl(resourceName);
     let req = request
       .get(resourceUrl)
@@ -33,7 +33,7 @@ module.exports = {
     return promiseYouWill(req);
   },
 
-  create (resourceName, resource, options={}) {
+  create: function(resourceName, resource, options={}) {
     let resourceUrl = _getResourceUrl(resourceName, resource.id);
     let req = request.post(resourceUrl)
       .set('Content-Type', 'application/json')
@@ -43,7 +43,7 @@ module.exports = {
     return promiseYouWill(req);
   },
 
-  update (resourceName, resource, options={}) {
+  update: function(resourceName, resource, options={}) {
     let resourceUrl = _getResourceUrl(resourceName, resource.id);
     let req = request.put(resourceUrl)
       .set('Content-Type', 'application/json')
@@ -53,7 +53,7 @@ module.exports = {
     return promiseYouWill(req);
   },
 
-  del (resourceName, resource) {
+  del: function(resourceName, resource) {
     let resourceUrl = _getResourceUrl(resourceName, resource.id);
     let req = request.del(resourceUrl);
 
