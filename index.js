@@ -1,6 +1,6 @@
 'use strict';
 
-let request = require('superagent');
+var request = require('superagent');
 
 function promiseYouWill(req) {
   return new Promise(function(resolve, reject) {
@@ -17,14 +17,14 @@ function promiseYouWill(req) {
 }
 
 function _getResourceUrl(resourceName, id=null) {
-  let url = '/api/' + resourceName;
+  var url = '/api/' + resourceName;
   url += (id) ? '/' + id : '';
   return url;
 }
 
 module.exports = {
   get: function(resourceName, options={}) {
-    let resourceUrl = _getResourceUrl(resourceName);
+    var resourceUrl = _getResourceUrl(resourceName);
     let req = request
       .get(resourceUrl)
       .accept('application/json')
@@ -34,8 +34,8 @@ module.exports = {
   },
 
   create: function(resourceName, resource, options={}) {
-    let resourceUrl = _getResourceUrl(resourceName, resource.id);
-    let req = request.post(resourceUrl)
+    var resourceUrl = _getResourceUrl(resourceName, resource.id);
+    var req = request.post(resourceUrl)
       .set('Content-Type', 'application/json')
       .query(options)
       .send(resource);
@@ -44,8 +44,8 @@ module.exports = {
   },
 
   update: function(resourceName, resource, options={}) {
-    let resourceUrl = _getResourceUrl(resourceName, resource.id);
-    let req = request.put(resourceUrl)
+    var resourceUrl = _getResourceUrl(resourceName, resource.id);
+    var req = request.put(resourceUrl)
       .set('Content-Type', 'application/json')
       .query(options)
       .send(resource);
@@ -54,8 +54,8 @@ module.exports = {
   },
 
   del: function(resourceName, resource) {
-    let resourceUrl = _getResourceUrl(resourceName, resource.id);
-    let req = request.del(resourceUrl);
+    var resourceUrl = _getResourceUrl(resourceName, resource.id);
+    var req = request.del(resourceUrl);
 
     return promiseYouWill(req);
   }
