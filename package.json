@@ -21,6 +21,7 @@
     "sinon": "^1.12.2"
   },
   "dependencies": {
+    "es6-promise": "^2.0.1",
     "superagent": "^0.21.0"
   }
 }
