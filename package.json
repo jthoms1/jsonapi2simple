@@ -1,27 +1,25 @@
 {
-  "name": "jsonapi-flux-util",
+  "name": "jsonapi2simple",
   "version": "0.0.1",
-  "description": "JSON API flux utility",
+  "description": "JSONAPI utility to transform between formats",
   "main": "index.js",
   "scripts": {
     "test": "mocha --check-leaks --reporter spec --bail"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jthoms1/jsonapi-flux-util.git"
+    "url": "https://github.com/jthoms1/jsonapi2simple.git"
   },
   "author": "Josh Thomas (http://github.com/jthoms1)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jthoms1/jsonapi-flux-util/issues"
+    "url": "https://github.com/jthoms1/jsonapi2simple/issues"
   },
-  "homepage": "https://github.com/jthoms1/jsonapi-flux-util",
+  "homepage": "https://github.com/jthoms1/jsonapi2simple",
   "devDependencies": {
-    "expect.js": "^0.3.1",
-    "sinon": "^1.12.2"
+    "expect.js": "^0.3.1"
   },
   "dependencies": {
-    "es6-promise": "^2.0.1",
-    "superagent": "^0.21.0"
+    "object-assign": "^2.0.0"
   }
 }
