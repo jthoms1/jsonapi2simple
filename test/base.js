@@ -5,7 +5,10 @@ var transform = require('../index.js'),
 
 describe('Data with no relationships', function () {
   var info = {
-      'type': 'articles'
+    'type': 'articles',
+    'relates': {
+      'author': 'people'
+    }
   };
   var apiData = {
     'data': {
@@ -33,7 +36,10 @@ describe('Data with no relationships', function () {
 
 describe('Data with 1-to-1 relationships', function () {
   var info = {
-      'type': 'articles'
+    'type': 'articles',
+    'relates': {
+      'author': 'people'
+    }
   };
   var apiData = {
     'data': {
@@ -69,42 +75,10 @@ describe('Data with 1-to-1 relationships', function () {
 
 describe('Data with 1-to-many relationships', function () {
   var info = {
-      'type': 'articles'
-  };
-  var apiData = {
-    'data': {
-      'type': 'articles',
-      'id': '1',
-      'title': 'Rails is a Melting Pot',
-      'links': {
-        'tags': {
-          'type': 'tags',
-          'ids': ['2', '3']
-        }
-      }
+    'type': 'articles',
+    'relates': {
+      'author': 'people'
     }
-  };
-  var simpleData = {
-    'id': '1',
-    'title': 'Rails is a Melting Pot',
-    'tagIds': ['2', '3']
-  };
-
-  it('should convert jsonapi data to simple', function (done) {
-    var result = transform.toSimple(apiData);
-    expect(result).to.eql(simpleData);
-    done();
-  });
-  it('should convert simple data to jsonapi', function (done) {
-    var result = transform.toJsonApi(simpleData, info);
-    expect(result).to.eql(apiData);
-    done();
-  });
-});
-
-describe('Data with 1-to-many relationships', function () {
-  var info = {
-      'type': 'articles'
   };
   var apiData = {
     'data': {
