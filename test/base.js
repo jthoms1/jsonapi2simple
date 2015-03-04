@@ -49,7 +49,7 @@ describe('Data with 1-to-1 relationships', function () {
       'links': {
         'author': {
           'type': 'people',
-           'id': '1'
+          'id': '1'
         }
       }
     }
@@ -75,10 +75,7 @@ describe('Data with 1-to-1 relationships', function () {
 
 describe('Data with 1-to-many relationships', function () {
   var info = {
-    'type': 'articles',
-    'relates': {
-      'author': 'people'
-    }
+    'type': 'articles'
   };
   var apiData = {
     'data': {
@@ -96,7 +93,7 @@ describe('Data with 1-to-many relationships', function () {
   var simpleData = {
     'id': '1',
     'title': 'Rails is a Melting Pot',
-    'tagIds': ['2', '3']
+    'tagsIds': ['2', '3']
   };
 
   it('should convert jsonapi data to simple', function (done) {
