@@ -1,5 +1,4 @@
 'use strict';
-var SELF_KEY = 'self';
 var TYPE_KEY = 'type';
 var LINK_KEY = 'links';
 
@@ -16,9 +15,6 @@ exports.toSimple = function (jsonApiData) {
       }
       if (LINK_KEY === key) {
         Object.keys(resourceObject[LINK_KEY]).forEach(function(relatedKey) {
-          if (SELF_KEY === relatedKey) {
-            return;
-          }
           if (!Array.isArray(resourceObject[LINK_KEY][relatedKey].id)) {
             resultsObject[relatedKey + 'Id'] = resourceObject[LINK_KEY][relatedKey].id;
           } else {
@@ -48,7 +44,6 @@ exports.toSimple = function (jsonApiData) {
   } else {
     simpleData = convertResource(jsonApiData.data);
   }
-  console.log(simpleData);
   return simpleData;
 };
 
@@ -80,6 +75,5 @@ exports.toJsonApi = function (simpleData, info) {
     }
     jsonApiData.data[key] = simpleData[key];
   });
-
   return jsonApiData;
 };

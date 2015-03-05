@@ -122,16 +122,11 @@ describe('Compound documents', function () {
         'id': '1',
         'title': 'JSON API paints my bikeshed!',
         'links': {
-          'self': 'http://example.com/articles/1',
           'author': {
-            'self': 'http://example.com/articles/1/links/author',
-            'resource': 'http://example.com/articles/1/author',
             'type': 'people',
             'id': '9'
           },
           'comments': {
-            'self': 'http://example.com/articles/1/links/comments',
-            'resource': 'http://example.com/articles/1/comments',
             'type': 'comments',
             'id': ['5', '12']
           }
@@ -144,26 +139,17 @@ describe('Compound documents', function () {
         'id': '9',
         'first-name': 'Dan',
         'last-name': 'Gebhardt',
-        'twitter': 'dgeb',
-        'links': {
-          'self': 'http://example.com/people/9'
-        }
+        'twitter': 'dgeb'
       },
       {
         'type': 'comments',
         'id': '5',
-        'body': 'First!',
-        'links': {
-          'self': 'http://example.com/comments/5'
-        }
+        'body': 'First!'
       },
       {
         'type': 'comments',
         'id': '12',
-        'body': 'I like XML better',
-        'links': {
-          'self': 'http://example.com/comments/12'
-        }
+        'body': 'I like XML better'
       }
     ]
   };
