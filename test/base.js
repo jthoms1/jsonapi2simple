@@ -85,7 +85,7 @@ describe('Data with 1-to-many relationships', function () {
       'links': {
         'tags': {
           'type': 'tags',
-          'ids': ['2', '3']
+          'id': ['2', '3']
         }
       }
     }
@@ -93,7 +93,7 @@ describe('Data with 1-to-many relationships', function () {
   var simpleData = {
     'id': '1',
     'title': 'Rails is a Melting Pot',
-    'tagsIds': ['2', '3']
+    'tagsId': ['2', '3']
   };
 
   it('should convert jsonapi data to simple', function (done) {
@@ -133,7 +133,7 @@ describe('Compound documents', function () {
             'self': 'http://example.com/articles/1/links/comments',
             'resource': 'http://example.com/articles/1/comments',
             'type': 'comments',
-            'ids': ['5', '12']
+            'id': ['5', '12']
           }
         }
       }
@@ -173,7 +173,7 @@ describe('Compound documents', function () {
         'id': '1',
         'title': 'JSON API paints my bikeshed!',
         'authorId': '9',
-        'commentsIds': ['5', '12']
+        'commentsId': ['5', '12']
       }
     ],
     'people': [

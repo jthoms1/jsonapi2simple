@@ -1,4 +1,5 @@
 'use strict';
+var SELF_KEY = 'self';
 var TYPE_KEY = 'type';
 var LINK_KEY = 'links';
 
@@ -7,26 +8,47 @@ exports.toSimple = function (jsonApiData) {
     throw new Error('data attribute required');
   }
 
+  function convertResource(resourceObject) {
+    var resultsObject = {};
+    Object.keys(resourceObject).forEach(function(key) {
+      if (TYPE_KEY === key) {
+        return;
+      }
+      if (LINK_KEY === key) {
+        Object.keys(resourceObject[LINK_KEY]).forEach(function(relatedKey) {
+          if (SELF_KEY === relatedKey) {
+            return;
+          }
+          if (!Array.isArray(resourceObject[LINK_KEY][relatedKey].id)) {
+            resultsObject[relatedKey + 'Id'] = resourceObject[LINK_KEY][relatedKey].id;
+          } else {
+            resultsObject[relatedKey + 'Id'] = resourceObject[LINK_KEY][relatedKey].id.slice();
+          }
+        });
+        return;
+      }
+      resultsObject[key] = resourceObject[key];
+    });
+    return resultsObject;
+  }
+
   var simpleData = {};
 
-  Object.keys(jsonApiData.data).forEach(function(key) {
-    if (TYPE_KEY === key) {
-      return;
+  if (jsonApiData.hasOwnProperty('linked')) {
+    var tmpArray;
+    if (!Array.isArray(jsonApiData.data)) {
+      tmpArray = [jsonApiData.data];
+    } else {
+      tmpArray = jsonApiData.data.slice();
     }
-    if (LINK_KEY === key) {
-      Object.keys(jsonApiData.data[LINK_KEY]).forEach(function(relatedKey) {
-        if (jsonApiData.data[LINK_KEY][relatedKey].id) {
-          simpleData[relatedKey + 'Id'] = jsonApiData.data[LINK_KEY][relatedKey].id;
-        } else {
-          console.log(jsonApiData.data[LINK_KEY][relatedKey].ids.slice());
-          simpleData[relatedKey + 'Ids'] = jsonApiData.data[LINK_KEY][relatedKey].ids.slice();
-        }
-      });
-      return;
-    }
-    simpleData[key] = jsonApiData.data[key];
-  });
-
+    tmpArray.concat(jsonApiData.linked).forEach(function (resourceItem) {
+      simpleData[resourceItem.type] = simpleData[resourceItem.type] || [];
+      simpleData[resourceItem.type].push(convertResource(resourceItem));
+    });
+  } else {
+    simpleData = convertResource(jsonApiData.data);
+  }
+  console.log(simpleData);
   return simpleData;
 };
 
@@ -45,16 +67,7 @@ exports.toJsonApi = function (simpleData, info) {
   Object.keys(simpleData).forEach(function(key) {
     var linkKey,
       linkName;
-    if (key.substr(-3) === 'Ids') {
-      jsonApiData.data.links = jsonApiData.data.links || {};
-      linkKey = key.substr(0, key.length - 3);
-      linkName = keyNames.hasOwnProperty(linkKey) ? keyNames[linkKey] : linkKey;
-      jsonApiData.data.links[linkKey] = {
-        'type': linkName,
-        'ids': simpleData[key].slice()
-      };
-      return;
-    }
+
     if (key.substr(-2) === 'Id') {
       jsonApiData.data.links = jsonApiData.data.links || {};
       linkKey = key.substr(0, key.length - 2);
