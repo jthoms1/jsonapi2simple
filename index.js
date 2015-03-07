@@ -52,28 +52,55 @@ exports.toJsonApi = function (simpleData, info) {
     throw new Error('additional info relevant to type is required.');
   }
 
-  var jsonApiData = {
-    'data': {
-      'type': info.type
-    }
-  };
+  function convertResource(simpleResourceObject, type, keys) {
+    var apiResourceObject = {};
+    apiResourceObject.type = type;
+
+    Object.keys(simpleResourceObject).forEach(function(key) {
+      var linkKey,
+        linkName;
+
+      if (key.substr(-2) === 'Id') {
+        apiResourceObject.links = apiResourceObject.links || {};
+        linkKey = key.substr(0, key.length - 2);
+        linkName = keys.hasOwnProperty(linkKey) ? keys[linkKey] : linkKey;
+        apiResourceObject.links[linkKey] = {
+          'type': linkName,
+          'id': simpleResourceObject[key]
+        };
+        return;
+      }
+      apiResourceObject[key] = simpleResourceObject[key];
+    });
+
+    return apiResourceObject;
+  }
+
+  var includesLinked = Object.keys(simpleData).every(function (key) {
+    return Array.isArray(simpleData[key]);
+  });
+
   var keyNames = info.hasOwnProperty('relates') ? info.relates : {};
 
-  Object.keys(simpleData).forEach(function(key) {
-    var linkKey,
-      linkName;
+  var jsonApiData = {};
+  if (includesLinked) {
+    var dataTypes = Object.keys(simpleData);
+    dataTypes.forEach(function(key) {
+      if (key === info.type) {
+        jsonApiData.data = jsonApiData.data || [];
+        simpleData[key].forEach(function(resourceItem) {
+          jsonApiData.data.push(convertResource(resourceItem, key, keyNames));
+        });
+      } else {
+        jsonApiData.linked = jsonApiData.linked || [];
+        simpleData[key].forEach(function(resourceItem) {
+          jsonApiData.linked.push(convertResource(resourceItem, key, keyNames));
+        });
+      }
+    });
+  } else {
+    jsonApiData.data = convertResource(simpleData, info.type, keyNames);
+  }
 
-    if (key.substr(-2) === 'Id') {
-      jsonApiData.data.links = jsonApiData.data.links || {};
-      linkKey = key.substr(0, key.length - 2);
-      linkName = keyNames.hasOwnProperty(linkKey) ? keyNames[linkKey] : linkKey;
-      jsonApiData.data.links[linkKey] = {
-        'type': linkName,
-        'id': simpleData[key]
-      };
-      return;
-    }
-    jsonApiData.data[key] = simpleData[key];
-  });
   return jsonApiData;
 };
