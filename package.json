@@ -1,6 +1,6 @@
 {
   "name": "jsonapi2simple",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "JSONAPI utility to transform between formats",
   "main": "index.js",
   "scripts": {
