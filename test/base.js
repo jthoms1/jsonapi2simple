@@ -108,6 +108,73 @@ describe('Data with 1-to-many relationships', function () {
   });
 });
 
+describe('Multiple data entries', function () {
+  var info = {
+    'type': 'articles',
+    'relates': {
+      'author': 'people'
+    }
+  };
+  var apiData = {
+    'data': [
+      {
+        'type': 'articles',
+        'id': '1',
+        'title': 'JSON API paints my bikeshed!',
+        'links': {
+          'author': {
+            'type': 'people',
+            'id': '9'
+          },
+          'comments': {
+            'type': 'comments',
+            'id': ['5', '12']
+          }
+        }
+      },
+      {
+        'type': 'articles',
+        'id': '6',
+        'title': 'JSON API paints my bikeshed too!',
+        'links': {
+          'author': {
+            'type': 'people',
+            'id': '9'
+          },
+          'comments': {
+            'type': 'comments',
+            'id': ['6', '13']
+          }
+        }
+      }
+    ]
+  };
+  var simpleData = [
+    {
+      'id': '1',
+      'title': 'JSON API paints my bikeshed!',
+      'authorId': '9',
+      'commentsId': ['5', '12']
+    },
+    {
+      'id': '6',
+      'title': 'JSON API paints my bikeshed too!',
+      'authorId': '9',
+      'commentsId': ['6', '13']
+    }
+  ];
+  it('should convert jsonapi data to simple', function (done) {
+    var result = transform.toSimple(apiData);
+    expect(result).to.eql(simpleData);
+    done();
+  });
+  it('should convert simple data to jsonapi', function (done) {
+    var result = transform.toJsonApi(simpleData, info);
+    expect(result).to.eql(apiData);
+    done();
+  });
+});
+
 describe('Compound documents', function () {
   var info = {
     'type': 'articles',
