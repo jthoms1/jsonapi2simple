@@ -29,9 +29,9 @@ exports.toSimple = function (jsonApiData) {
   }
 
   var simpleData = {};
-
+  var tmpArray = [];
   if (jsonApiData.hasOwnProperty('linked')) {
-    var tmpArray;
+    
     if (!Array.isArray(jsonApiData.data)) {
       tmpArray = [jsonApiData.data];
     } else {
@@ -42,7 +42,14 @@ exports.toSimple = function (jsonApiData) {
       simpleData[resourceItem.type].push(convertResource(resourceItem));
     });
   } else {
-    simpleData = convertResource(jsonApiData.data);
+    if (Array.isArray(jsonApiData.data)) {
+		  jsonApiData.data.forEach(function (resourceItem) {
+        tmpArray.push(convertResource(resourceItem));
+      });
+      simpleData = tmpArray;
+	  } else {
+      simpleData = convertResource(jsonApiData.data);
+    }
   }
   return simpleData;
 };
