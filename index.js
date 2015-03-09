@@ -31,7 +31,7 @@ exports.toSimple = function (jsonApiData) {
   var simpleData = {};
   var tmpArray = [];
   if (jsonApiData.hasOwnProperty('linked')) {
-    
+
     if (!Array.isArray(jsonApiData.data)) {
       tmpArray = [jsonApiData.data];
     } else {
@@ -41,15 +41,17 @@ exports.toSimple = function (jsonApiData) {
       simpleData[resourceItem.type] = simpleData[resourceItem.type] || [];
       simpleData[resourceItem.type].push(convertResource(resourceItem));
     });
+
+  } else if (Array.isArray(jsonApiData.data)) {
+
+    jsonApiData.data.forEach(function (resourceItem) {
+      tmpArray.push(convertResource(resourceItem));
+    });
+    simpleData = tmpArray;
+
   } else {
-    if (Array.isArray(jsonApiData.data)) {
-		  jsonApiData.data.forEach(function (resourceItem) {
-        tmpArray.push(convertResource(resourceItem));
-      });
-      simpleData = tmpArray;
-	  } else {
-      simpleData = convertResource(jsonApiData.data);
-    }
+
+    simpleData = convertResource(jsonApiData.data);
   }
   return simpleData;
 };
@@ -104,6 +106,11 @@ exports.toJsonApi = function (simpleData, info) {
           jsonApiData.linked.push(convertResource(resourceItem, key, keyNames));
         });
       }
+    });
+  } else if (Array.isArray(simpleData)) {
+    jsonApiData.data = [];
+    simpleData.forEach(function(resourceItem) {
+      jsonApiData.data.push(convertResource(resourceItem, info.type, keyNames));
     });
   } else {
     jsonApiData.data = convertResource(simpleData, info.type, keyNames);
