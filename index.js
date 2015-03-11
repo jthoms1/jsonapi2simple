@@ -30,14 +30,13 @@ exports.toSimple = function (jsonApiData) {
 
   var simpleData = {};
   var tmpArray = [];
-  if (jsonApiData.hasOwnProperty('linked')) {
-
+  if (jsonApiData.hasOwnProperty('included')) {
     if (!Array.isArray(jsonApiData.data)) {
       tmpArray = [jsonApiData.data];
     } else {
       tmpArray = jsonApiData.data.slice();
     }
-    tmpArray.concat(jsonApiData.linked).forEach(function (resourceItem) {
+    tmpArray.concat(jsonApiData.included).forEach(function (resourceItem) {
       simpleData[resourceItem.type] = simpleData[resourceItem.type] || [];
       simpleData[resourceItem.type].push(convertResource(resourceItem));
     });
@@ -101,9 +100,9 @@ exports.toJsonApi = function (simpleData, info) {
           jsonApiData.data.push(convertResource(resourceItem, key, keyNames));
         });
       } else {
-        jsonApiData.linked = jsonApiData.linked || [];
+        jsonApiData.included = jsonApiData.included || [];
         simpleData[key].forEach(function(resourceItem) {
-          jsonApiData.linked.push(convertResource(resourceItem, key, keyNames));
+          jsonApiData.included.push(convertResource(resourceItem, key, keyNames));
         });
       }
     });

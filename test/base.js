@@ -200,7 +200,7 @@ describe('Compound documents', function () {
         }
       }
     ],
-    'linked': [
+    'included': [
       {
         'type': 'people',
         'id': '9',
