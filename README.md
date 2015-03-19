@@ -10,6 +10,7 @@ This tool was built for allowing front-end applications to work with a simplifie
 var converter = require('jsonapi2simple');
 var objectInfo = {
   'type': 'articles',
+  'baseUrl': '/api',
   'relates': {
     'author': 'people'
   }
@@ -18,7 +19,10 @@ var simpleContent = converter.toSimple({
   'data': {
     'id': '4f32132',
     'type': 'articles',
-    'title': 'This Tool is Easy'
+    'title': 'This Tool is Easy',
+    'links': {
+      'self': '/api/articles/4f32132'
+    }
   }
 }, objectInfo);
 /*
@@ -35,7 +39,10 @@ jsonApiContent now contains:
   'data': {
     'id': '4f32132',
     'type': 'articles',
-    'title': 'This Tool is Easy'
+    'title': 'This Tool is Easy',
+    'links': {
+      'self': '/api/articles/4f32132'
+    }
   }
 }
 */
