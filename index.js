@@ -1,6 +1,8 @@
 'use strict';
 var TYPE_KEY = 'type';
 var LINK_KEY = 'links';
+var SELF_KEY = 'self';
+var LINKAGE_KEY = 'linkage';
 
 exports.toSimple = function (jsonApiData) {
   if (!jsonApiData.hasOwnProperty('data')) {
@@ -15,10 +17,14 @@ exports.toSimple = function (jsonApiData) {
       }
       if (LINK_KEY === key) {
         Object.keys(resourceObject[LINK_KEY]).forEach(function(relatedKey) {
-          if (!Array.isArray(resourceObject[LINK_KEY][relatedKey].id)) {
-            resultsObject[relatedKey + 'Id'] = resourceObject[LINK_KEY][relatedKey].id;
+          if (relatedKey === SELF_KEY) {
+            return;
+          } else if (!Array.isArray(resourceObject[LINK_KEY][relatedKey][LINKAGE_KEY])) {
+            resultsObject[relatedKey + 'Id'] = resourceObject[LINK_KEY][relatedKey][LINKAGE_KEY].id;
           } else {
-            resultsObject[relatedKey + 'Id'] = resourceObject[LINK_KEY][relatedKey].id.slice();
+            resultsObject[relatedKey + 'Id'] = resourceObject[LINK_KEY][relatedKey][LINKAGE_KEY].map(function(item) {
+              return item.id;
+            });
           }
         });
         return;
@@ -62,20 +68,35 @@ exports.toJsonApi = function (simpleData, info) {
 
   function convertResource(simpleResourceObject, type, keys) {
     var apiResourceObject = {};
-    apiResourceObject.type = type;
+    apiResourceObject[TYPE_KEY] = type;
+    apiResourceObject[LINK_KEY] = {};
+    apiResourceObject[LINK_KEY][SELF_KEY] = info.baseUrl + '/' + type + '/' + simpleResourceObject.id;
 
     Object.keys(simpleResourceObject).forEach(function(key) {
-      var linkKey,
+      var linkResourceName,
         linkName;
 
+      // If the resource attribute is actually an Id it defines a relationship
       if (key.substr(-2) === 'Id') {
-        apiResourceObject.links = apiResourceObject.links || {};
-        linkKey = key.substr(0, key.length - 2);
-        linkName = keys.hasOwnProperty(linkKey) ? keys[linkKey] : linkKey;
-        apiResourceObject.links[linkKey] = {
-          'type': linkName,
-          'id': simpleResourceObject[key]
+        linkResourceName = key.substr(0, key.length - 2);
+        linkName = keys.hasOwnProperty(linkResourceName) ? keys[linkResourceName] : linkResourceName;
+        apiResourceObject[LINK_KEY][linkResourceName] = {
+          'related': info.baseUrl + '/' + type + '/' + simpleResourceObject.id + '/' + linkResourceName,
+          'self': info.baseUrl + '/' + type + '/' + simpleResourceObject.id + '/' + LINK_KEY + '/' + linkResourceName
         };
+        if (Array.isArray(simpleResourceObject[key])) {
+          apiResourceObject[LINK_KEY][linkResourceName][LINKAGE_KEY] = simpleResourceObject[key].map(function(itemId) {
+            return {
+              'type': linkName,
+              'id': itemId
+            };
+          });
+        } else {
+          apiResourceObject[LINK_KEY][linkResourceName][LINKAGE_KEY] = {
+            'type': linkName,
+            'id': simpleResourceObject[key]
+          };
+        }
         return;
       }
       apiResourceObject[key] = simpleResourceObject[key];

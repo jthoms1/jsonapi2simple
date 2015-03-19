@@ -161,8 +161,8 @@ describe('Multiple data entries', function () {
             'linkage': { 'type': 'people', 'id': '9' }
           },
           'comments': {
-            'self': '/api/articles/1/links/comments',
-            'related': '/api/articles/1/comments',
+            'self': '/api/articles/6/links/comments',
+            'related': '/api/articles/6/comments',
             'linkage': [
               { 'type': 'comments', 'id': '6' },
               { 'type': 'comments', 'id': '13' }
@@ -215,8 +215,8 @@ describe('Compound documents', function () {
         'links': {
           'self': '/api/articles/1',
           'author': {
-            'self': '/api/articles/6/links/author',
-            'related': '/api/articles/6/author',
+            'self': '/api/articles/1/links/author',
+            'related': '/api/articles/1/author',
             'linkage': { 'type': 'people', 'id': '9' }
           },
           'comments': {
