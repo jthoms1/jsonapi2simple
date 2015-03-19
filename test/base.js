@@ -6,15 +6,16 @@ var transform = require('../index.js'),
 describe('Data with no relationships', function () {
   var info = {
     'type': 'articles',
-    'relates': {
-      'author': 'people'
-    }
+    'baseUrl': '/api'
   };
   var apiData = {
     'data': {
       'type': 'articles',
       'id': '1',
-      'title': 'Rails is a Melting Pot'
+      'title': 'Rails is a Melting Pot',
+      'links': {
+        'self': '/api/articles/1'
+      }
     }
   };
   var simpleData = {
@@ -37,6 +38,7 @@ describe('Data with no relationships', function () {
 describe('Data with 1-to-1 relationships', function () {
   var info = {
     'type': 'articles',
+    'baseUrl': '/api',
     'relates': {
       'author': 'people'
     }
@@ -47,9 +49,11 @@ describe('Data with 1-to-1 relationships', function () {
       'id': '1',
       'title': 'Rails is a Melting Pot',
       'links': {
+        'self': '/api/articles/1',
         'author': {
-          'type': 'people',
-          'id': '1'
+          'self': '/api/articles/1/links/author',
+          'related': '/api/articles/1/author',
+          'linkage': { 'type': 'people', 'id': '1' }
         }
       }
     }
@@ -75,7 +79,8 @@ describe('Data with 1-to-1 relationships', function () {
 
 describe('Data with 1-to-many relationships', function () {
   var info = {
-    'type': 'articles'
+    'type': 'articles',
+    'baseUrl': '/api'
   };
   var apiData = {
     'data': {
@@ -83,9 +88,14 @@ describe('Data with 1-to-many relationships', function () {
       'id': '1',
       'title': 'Rails is a Melting Pot',
       'links': {
+        'self': '/api/articles/1',
         'tags': {
-          'type': 'tags',
-          'id': ['2', '3']
+          'self': '/api/articles/1/links/tags',
+          'related': '/api/articles/1/tags',
+          'linkage': [
+            { 'type': 'tags', 'id': '2' },
+            { 'type': 'tags', 'id': '3' }
+          ]
         }
       }
     }
@@ -111,6 +121,7 @@ describe('Data with 1-to-many relationships', function () {
 describe('Multiple data entries', function () {
   var info = {
     'type': 'articles',
+    'baseUrl': '/api',
     'relates': {
       'author': 'people'
     }
@@ -122,13 +133,19 @@ describe('Multiple data entries', function () {
         'id': '1',
         'title': 'JSON API paints my bikeshed!',
         'links': {
+          'self': '/api/articles/1',
           'author': {
-            'type': 'people',
-            'id': '9'
+            'self': '/api/articles/1/links/author',
+            'related': '/api/articles/1/author',
+            'linkage': { 'type': 'people', 'id': '9' }
           },
           'comments': {
-            'type': 'comments',
-            'id': ['5', '12']
+            'self': '/api/articles/1/links/comments',
+            'related': '/api/articles/1/comments',
+            'linkage': [
+              { 'type': 'comments', 'id': '5' },
+              { 'type': 'comments', 'id': '12' }
+            ]
           }
         }
       },
@@ -137,13 +154,19 @@ describe('Multiple data entries', function () {
         'id': '6',
         'title': 'JSON API paints my bikeshed too!',
         'links': {
+          'self': '/api/articles/6',
           'author': {
-            'type': 'people',
-            'id': '9'
+            'self': '/api/articles/6/links/author',
+            'related': '/api/articles/6/author',
+            'linkage': { 'type': 'people', 'id': '9' }
           },
           'comments': {
-            'type': 'comments',
-            'id': ['6', '13']
+            'self': '/api/articles/1/links/comments',
+            'related': '/api/articles/1/comments',
+            'linkage': [
+              { 'type': 'comments', 'id': '6' },
+              { 'type': 'comments', 'id': '13' }
+            ]
           }
         }
       }
@@ -178,6 +201,7 @@ describe('Multiple data entries', function () {
 describe('Compound documents', function () {
   var info = {
     'type': 'articles',
+    'baseUrl': '/api',
     'relates': {
       'author': 'people'
     }
@@ -189,13 +213,19 @@ describe('Compound documents', function () {
         'id': '1',
         'title': 'JSON API paints my bikeshed!',
         'links': {
+          'self': '/api/articles/1',
           'author': {
-            'type': 'people',
-            'id': '9'
+            'self': '/api/articles/6/links/author',
+            'related': '/api/articles/6/author',
+            'linkage': { 'type': 'people', 'id': '9' }
           },
           'comments': {
-            'type': 'comments',
-            'id': ['5', '12']
+            'self': '/api/articles/1/links/comments',
+            'related': '/api/articles/1/comments',
+            'linkage': [
+              { 'type': 'comments', 'id': '5' },
+              { 'type': 'comments', 'id': '12' }
+            ]
           }
         }
       }
@@ -206,17 +236,26 @@ describe('Compound documents', function () {
         'id': '9',
         'first-name': 'Dan',
         'last-name': 'Gebhardt',
-        'twitter': 'dgeb'
+        'twitter': 'dgeb',
+        'links': {
+          'self': '/api/people/9'
+        }
       },
       {
         'type': 'comments',
         'id': '5',
-        'body': 'First!'
+        'body': 'First!',
+        'links': {
+          'self': '/api/comments/5'
+        }
       },
       {
         'type': 'comments',
         'id': '12',
-        'body': 'I like XML better'
+        'body': 'I like XML better',
+        'links': {
+          'self': '/api/comments/12'
+        }
       }
     ]
   };
