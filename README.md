@@ -2,6 +2,7 @@
 [![Dependency Status][david-badge]][david-badge-url]
 [![Coverage Status][coveralls-badge]][coveralls-badge-url]
 [![npm][npm-badge]][npm-badge-url]
+
 # jsonapi2simple
 Utility to allow conversion between simple JSON data and JSONAPI service based structure.
 
@@ -58,7 +59,7 @@ For more complex structures or other use cases please refer to the included test
 [travis-badge-url]: https://travis-ci.org/jthoms1/jsonapi2simple
 [david-badge]: https://david-dm.org/jthoms1/jsonapi2simple.svg
 [david-badge-url]: https://david-dm.org/jthoms1/jsonapi2simple
-[coveralls-badge]: https://coveralls.io/repos/jthoms1/jsonapi2simple/badge.svg?branch=master&service=github
+[coveralls-badge]: https://coveralls.io/repos/github/jthoms1/jsonapi2simple/badge.svg?branch=master
 [coveralls-badge-url]: https://coveralls.io/github/jthoms1/jsonapi2simple?branch=master
 [npm-badge]: https://img.shields.io/npm/v/jsonapi2simple.svg
 [npm-badge-url]: https://www.npmjs.com/package/jsonapi2simple
