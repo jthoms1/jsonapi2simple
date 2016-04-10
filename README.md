@@ -1,7 +1,7 @@
-[![Build
-Status](https://travis-ci.org/jthoms1/jsonapi2simple.svg?branch=master)](https://travis-ci.org/jthoms1/jsonapi2simple)
-[![Dependency Status](https://david-dm.org/jthoms1/jsonapi2simple.svg)](https://david-dm.org/jthoms1/jsonapi2simple)
-[![Coverage Status](https://coveralls.io/repos/jthoms1/jsonapi2simple/badge.svg?branch=master&service=github)](https://coveralls.io/github/jthoms1/jsonapi2simple?branch=master)
+[![Build Status][travis-badge]][travis-badge-url]
+[![Dependency Status][david-badge]][david-badge-url]
+[![Coverage Status][coveralls-badge]][coveralls-badge-url]
+[![npm][npm-badge]][npm-badge-url]
 # jsonapi2simple
 Utility to allow conversion between simple JSON data and JSONAPI service based structure.
 
@@ -53,3 +53,12 @@ jsonApiContent now contains:
 This can also be used for more complex structures. Usually with a front-end application the code that is interacting with the server will contain some meta data about the request such as its type and the resource's relationships to other resources.
 
 For more complex structures or other use cases please refer to the included tests.
+
+[travis-badge]: https://travis-ci.org/jthoms1/jsonapi2simple.svg?branch=master
+[travis-badge-url]: https://travis-ci.org/jthoms1/jsonapi2simple
+[david-badge]: https://david-dm.org/jthoms1/jsonapi2simple.svg
+[david-badge-url]: https://david-dm.org/jthoms1/jsonapi2simple
+[coveralls-badge]: https://coveralls.io/repos/jthoms1/jsonapi2simple/badge.svg?branch=master&service=github
+[coveralls-badge-url]: https://coveralls.io/github/jthoms1/jsonapi2simple?branch=master
+[npm-badge]: https://img.shields.io/npm/v/jsonapi2simple.svg
+[npm-badge-url]: https://www.npmjs.com/package/jsonapi2simple
