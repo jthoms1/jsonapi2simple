@@ -1,5 +1,7 @@
 [![Build
 Status](https://travis-ci.org/jthoms1/jsonapi2simple.svg?branch=master)](https://travis-ci.org/jthoms1/jsonapi2simple)
+[![Dependency Status](https://david-dm.org/jthoms1/jsonapi2simple.svg)](https://david-dm.org/jthoms1/jsonapi2simple)
+[![Coverage Status](https://coveralls.io/repos/jthoms1/jsonapi2simple/badge.svg?branch=master&service=github)](https://coveralls.io/github/jthoms1/jsonapi2simple?branch=master)
 # jsonapi2simple
 Utility to allow conversion between simple JSON data and JSONAPI service based structure.
 
