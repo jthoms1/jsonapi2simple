@@ -4,7 +4,7 @@
   "description": "JSONAPI utility to transform between formats",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --report lcov -- test"
+    "test": "istanbul cover node_modules/mocha/bin/_mocha --report lcov -- test"
   },
   "repository": {
     "type": "git",
