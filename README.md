@@ -1,4 +1,5 @@
 [![Build Status][travis-badge]][travis-badge-url]
+[![Build status][appveyor-badge]][appveyor-badge-url]
 [![Dependency Status][david-badge]][david-badge-url]
 [![Coverage Status][coveralls-badge]][coveralls-badge-url]
 [![npm][npm-badge]][npm-badge-url]
@@ -57,6 +58,8 @@ For more complex structures or other use cases please refer to the included test
 
 [travis-badge]: https://travis-ci.org/jthoms1/jsonapi2simple.svg?branch=master
 [travis-badge-url]: https://travis-ci.org/jthoms1/jsonapi2simple
+[appveyor-badge]: https://ci.appveyor.com/api/projects/status/908a0x9ei9l5oc29?svg=true
+[appveyor-badge-url]: https://ci.appveyor.com/project/jthoms1/jsonapi2simple
 [david-badge]: https://david-dm.org/jthoms1/jsonapi2simple.svg
 [david-badge-url]: https://david-dm.org/jthoms1/jsonapi2simple
 [coveralls-badge]: https://coveralls.io/repos/github/jthoms1/jsonapi2simple/badge.svg?branch=master
