@@ -1,3 +1,8 @@
+'use strict';
+
+var transform = require('../index.js');
+var expect = require('expect.js');
+
 describe('camel cased relationships', function () {
   var info = {
      "type": "order_template_images",
