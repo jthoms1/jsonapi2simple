@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/jthoms1/jsonapi2simple",
   "devDependencies": {
-    "coveralls": "^2.11.9",
+    "coveralls": "^2.11.15",
     "expect.js": "^0.3.1",
     "istanbul": "^0.4.3",
     "mocha": "^2.2.0"
